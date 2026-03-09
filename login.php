@@ -50,8 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     );
                     registraLog($usuario['usuario_id'], 'LOGIN', 'Login realizado', 'tbl_usuarios', $usuario['usuario_id']);
 
-                    header('Location: ' . $sRet);
+                    // Após validação bem-sucedida, redirecionar pelo perfil:
+                    $perfil = (int)($_SESSION['usr_perfil'] ?? 0);
+                    if ($perfil === 1) {
+                        // Admin → painel administrativo
+                        $destino = $sRet ?: '/crmv/admin/dashboard.php';
+                    } else {
+                        // Veterinário/aluno → portal do aluno
+                        $destino = '/crmv/aluno/dashboard.php';
+                    }
+                    header('Location: ' . $destino);
                     exit;
+
                 } else {
                     // ── SENHA ERRADA ─────────────────────────────
                     $iTent = (int)$usuario['tentativas_login'] + 1;

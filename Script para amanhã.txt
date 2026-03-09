@@ -1,9 +1,7 @@
-Blz claude, deu tudo certo até aqui, cadastrou os veterinários, cadastrou os curos tudo certinho, porem onde fica a parte dos veterinários ser aluno?
+Blz Claude, ficou perfeito e maravilhoso, conseguir matricular o aluno no curso sem problemas nenhum.
 
-por que o sistema só ta permitindo admin acessar ele, mas essa plataformas são para veterinários(alunos) fazerem os cursos e emitirem os certificados, acessar os materiais.
+Porem como vamos saber se ele concluiu tudo certinho, que assistiu a video aula, que baixou os materiais e tambem se ele respondeu a avaliação, pois não apareceu nada disso no momento.
 
-E até o momento só tem o crud dessas coisas.
+E lembrar tambem que no modulo 1 pode ter tbm varios videos pode ser por uploads ou pode ser por link url.
 
-lembrando que esse sistema é voltado para veterinários(alunos) participarem, onde o admin matricula eles no curso que necessita e quando eles acessarem o portal eles vejam o curso que está em aberto e matriculado para abrir e acessar as funcionalidades, seja ela link de aulas no youtube, uma avaliação para para geração do certificado em caso de curso presencial, acessarem os materiais disponiveis naquele curso.
-
-Ah e outra alteração importante, o certificado ele terá frente e verso, na frente ele terá as informações do nome do curso e as informações necessarias como tambem a logo e a assinatura do presidente, e no verso ele terá o conteudo programatico como terá tambem o qrcode de autenticação. Irei disponibilizar um modelo de certificado que quero que faça como exemplo.
+Precisamos corrigir isso no momento.

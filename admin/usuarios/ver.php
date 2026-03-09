@@ -49,6 +49,9 @@ require_once __DIR__ . '/../../includes/layout.php';
             </div>
         </div>
         <div class="pg-acoes">
+            <a href="/crmv/admin/usuarios/matriculas.php?id=<?= $id ?>" class="btn btn-primario">
+                <i class="fa-solid fa-graduation-cap"></i> Matrículas
+            </a>
             <a href="/crmv/admin/usuarios/form.php?id=<?= $id ?>" class="btn btn-secundario">
                 <i class="fa-solid fa-pen"></i> Editar
             </a>
@@ -169,6 +172,9 @@ $totAtiv = count(array_filter($matriculas, fn($m) => $m['status'] === 'ATIVA'));
     <div class="card">
         <div class="card-header">
             <span class="card-titulo"><i class="fa-solid fa-graduation-cap"></i> Histórico de Cursos</span>
+            <a href="/crmv/admin/usuarios/matriculas.php?id=<?= $id ?>" class="btn btn-primario btn-sm">
+                <i class="fa-solid fa-user-plus"></i> Gerenciar Matrículas
+            </a>
         </div>
         <?php if (empty($matriculas)): ?>
         <div class="vazio" style="padding:40px">
