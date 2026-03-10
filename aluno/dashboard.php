@@ -78,7 +78,7 @@ function badgeMatStatus(string $s): string {
                 background:rgba(255,255,255,.04);border-radius:50%"></div>
     <div style="position:relative">
         <h2 style="font-family:var(--font-titulo);font-size:1.4rem;margin:0 0 5px;font-weight:700">
-            Olá, <?= htmlspecialchars(primeiraLetra($usuario['nome_completo'] ?? '')) ?>!
+            Olá, <?= ($usuario['nome_completo'] ?? '') ?>!
         </h2>
         <p style="font-size:.875rem;color:rgba(255,255,255,.65);margin:0">
             Bem-vindo ao seu portal de capacitações — CRMV-TO

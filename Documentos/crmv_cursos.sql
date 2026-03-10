@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/03/2026 às 03:36
+-- Tempo de geração: 09/03/2026 às 04:34
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -38,28 +38,6 @@ CREATE TABLE `tbl_alternativas` (
   `ordem` smallint(6) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `tbl_alternativas`
---
-
-INSERT INTO `tbl_alternativas` (`alternativa_id`, `questao_id`, `texto`, `correta`, `ordem`) VALUES
-(1, 1, 'asdasdsad', 1, 1),
-(2, 1, 'asdasdasd', 0, 2),
-(3, 1, 'asdasd', 0, 3),
-(4, 1, 'asdasda', 0, 4),
-(5, 2, 'sadasdas', 0, 1),
-(6, 2, 'asdasdasd', 1, 2),
-(7, 2, 'sdaasdsad', 0, 3),
-(8, 2, 'asdasda', 0, 4),
-(9, 3, 'asdasdas', 0, 1),
-(10, 3, 'asdasda', 0, 2),
-(11, 3, 'asdsada', 1, 3),
-(12, 3, 'asdasd', 0, 4),
-(13, 4, 'asdasdas', 1, 1),
-(14, 4, 'asdasdas', 0, 2),
-(15, 4, 'sadasd', 0, 3),
-(16, 4, 'asdasd', 0, 4);
-
 -- --------------------------------------------------------
 
 --
@@ -74,25 +52,11 @@ CREATE TABLE `tbl_aulas` (
   `descricao` text DEFAULT NULL,
   `youtube_id` varchar(100) DEFAULT NULL COMMENT 'ID do vídeo no YouTube (parte após ?v=)',
   `link_externo` varchar(500) DEFAULT NULL COMMENT 'Link para plataforma EAD ou recurso externo',
-  `arquivo_video` varchar(300) DEFAULT NULL COMMENT 'Nome do arquivo de vídeo enviado por upload local',
   `duracao_min` smallint(5) UNSIGNED DEFAULT NULL COMMENT 'Duração em minutos',
   `ordem` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
   `ativo` tinyint(1) NOT NULL DEFAULT 1,
   `criado_em` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Despejando dados para a tabela `tbl_aulas`
---
-
-INSERT INTO `tbl_aulas` (`aula_id`, `modulo_id`, `titulo`, `descricao`, `youtube_id`, `link_externo`, `arquivo_video`, `duracao_min`, `ordem`, `ativo`, `criado_em`) VALUES
-(4, 2, 'Aula 1', NULL, 'dyBmhdLMkac', NULL, NULL, NULL, 1, 1, '2026-03-09 23:21:40'),
-(5, 2, 'Aula 2', NULL, 'dyBmhdLMkac', NULL, NULL, NULL, 2, 1, '2026-03-09 23:21:40'),
-(6, 2, 'Aula 3', NULL, NULL, NULL, NULL, NULL, 3, 1, '2026-03-09 23:21:40'),
-(7, 1, 'Aula 1', NULL, 'dyBmhdLMkac', NULL, NULL, NULL, 1, 1, '2026-03-09 23:25:34'),
-(10, 3, 'Aula 1', NULL, 'dyBmhdLMkac', NULL, NULL, NULL, 1, 1, '2026-03-09 23:28:26'),
-(11, 3, 'Aula 2', NULL, 'dyBmhdLMkac', NULL, NULL, NULL, 2, 1, '2026-03-09 23:28:26'),
-(12, 3, 'Aula 3', NULL, NULL, NULL, 'video_8_1773109706_32c70a.mp4', NULL, 3, 1, '2026-03-09 23:28:26');
 
 -- --------------------------------------------------------
 
@@ -115,14 +79,6 @@ CREATE TABLE `tbl_avaliacoes` (
   `ativo` tinyint(1) NOT NULL DEFAULT 1,
   `criado_em` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `tbl_avaliacoes`
---
-
-INSERT INTO `tbl_avaliacoes` (`avaliacao_id`, `curso_id`, `modulo_id`, `titulo`, `descricao`, `tipo`, `nota_minima`, `tempo_limite`, `tentativas_max`, `randomizar`, `ativo`, `criado_em`) VALUES
-(1, 7, NULL, 'Avaliação Final', '', 'PROVA', 70.00, NULL, 3, 0, 1, '2026-03-09 23:04:00'),
-(2, 8, NULL, 'Avaliação Final', '', 'PROVA', 70.00, NULL, 3, 0, 1, '2026-03-09 23:27:59');
 
 -- --------------------------------------------------------
 
@@ -179,8 +135,7 @@ CREATE TABLE `tbl_certificados` (
 
 INSERT INTO `tbl_certificados` (`cert_id`, `matricula_id`, `codigo`, `emitido_em`, `qr_path`, `pdf_path`, `valido`) VALUES
 (1, 1, 'QA5P-E5TN-GSZY', '2026-03-06 23:01:57', NULL, NULL, 1),
-(2, 2, 'CWW6-JCD6-SNND', '2026-03-07 00:07:30', NULL, NULL, 1),
-(3, 3, 'DPYU-W87C-J49J', '2026-03-09 16:36:04', NULL, NULL, 1);
+(2, 2, 'CWW6-JCD6-SNND', '2026-03-07 00:07:30', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -254,8 +209,8 @@ CREATE TABLE `tbl_cursos` (
   `instrutor_id` int(11) DEFAULT NULL,
   `requer_avaliacao` tinyint(1) NOT NULL DEFAULT 0,
   `avaliacao_com_nota` tinyint(1) NOT NULL DEFAULT 0,
-  `nota_minima` decimal(5,2) NOT NULL DEFAULT 70.00,
-  `tentativas_maximas` tinyint(4) NOT NULL DEFAULT 3,
+  `nota_minima` decimal(5,2) DEFAULT 70.00,
+  `tentativas_maximas` smallint(6) NOT NULL DEFAULT 3,
   `cert_frente_html` text DEFAULT NULL,
   `cert_verso_html` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -266,13 +221,9 @@ CREATE TABLE `tbl_cursos` (
 
 INSERT INTO `tbl_cursos` (`curso_id`, `categoria_id`, `titulo`, `descricao`, `capa`, `observacoes`, `tipo`, `modalidade`, `carga_horaria`, `vagas`, `data_inicio`, `data_fim`, `horario`, `local_nome`, `local_cidade`, `local_uf`, `local_endereco`, `link_ead`, `youtube_id`, `valor`, `status`, `cert_modelo`, `cert_conteudo_programatico`, `cert_validade`, `cert_obs`, `ativo`, `criado_em`, `atualizado_em`, `criado_por`, `instrutor_id`, `requer_avaliacao`, `avaliacao_com_nota`, `nota_minima`, `tentativas_maximas`, `cert_frente_html`, `cert_verso_html`) VALUES
 (1, 1, 'dsadasdasdasdasd', 'sdasdsadsadsad', 'capa_1772848884_5e30e1af.jpg', '', 'CURSO', 'PRESENCIAL', 12.0, NULL, '2026-03-09', '2026-03-10', '', 'Auditório da adapec', 'Palmas', 'TO', 'Quadra ARSE 51 Alameda 9', '', '', 0.00, 'ENCERRADO', NULL, NULL, NULL, NULL, 1, '2026-03-06 23:01:24', '2026-03-07 00:11:28', 2, NULL, 0, 0, 70.00, 3, NULL, NULL),
-(2, NULL, 'Curso de Bombeiros', 'asdasdsadasdasdasdasd', 'capa_1773109651_bdee0497.jpeg', 'asdasdasd', 'CURSO', 'EAD', 10.0, NULL, '2026-03-10', '2026-03-17', '', '', '', 'TO', '', '', '', 0.00, 'PUBLICADO', NULL, 'asdsadasdasdasdasdasdasdassad', NULL, '', 1, '2026-03-07 00:06:45', '2026-03-09 23:28:09', 2, NULL, 0, 0, 70.00, 3, NULL, NULL),
+(2, 7, 'Curso de Bovinos', 'Curso de bem estar animal', 'capa_1772852805_4a1854ca.jpg', '', 'CURSO', 'EAD', 15.0, 50, '2026-03-09', '2026-03-11', '', '', '', 'TO', '', '', 'vNK58tL6J70', 0.00, 'PUBLICADO', NULL, NULL, NULL, NULL, 1, '2026-03-07 00:06:45', NULL, 2, NULL, 0, 0, 70.00, 3, NULL, NULL),
 (3, 2, 'testet testando', 'asdasdsadasdasd', 'capa_1772853053_d7586b18.jpeg', '', 'PALESTRA', 'PRESENCIAL', 4.0, 14, '2026-03-09', '2026-03-09', '', 'Auditório da adapec', 'Palmas', 'TO', 'Quadra ARSE 51 Alameda 9', '', '', 0.00, 'PUBLICADO', NULL, NULL, NULL, NULL, 1, '2026-03-07 00:10:53', '2026-03-07 00:11:17', 1, NULL, 0, 0, 70.00, 3, NULL, NULL),
-(4, 7, 'Curso Febre Aftosa', 'sadasdsadsadsada', 'capa_1773026231_e46de8b9.jpeg', 'asdasdasdasdsad', 'CURSO', 'EAD', 12.0, 51, '2026-03-09', '2026-03-11', '', '', '', 'TO', '', '', 'c4XeTP11EI8', 0.00, 'ENCERRADO', NULL, '\r\n                        <div><b>Conteúdo Programático:</b></div><div><ul><li>Panorama atual da piscicultura tocantinense (ascendência da atividade, municípios / região mais produtivos e identificação das espécies de importância</li><li>econômica no Tocantins);</li><li>Ascendência da atividade, municípios / região mais produtivos e identificação das espécies de importância econômica no Tocantins;</li><li>Câmara Setorial da Piscicultura;</li><li>Qualidade da água na piscicultura (Parâmetros Físico-químicos);</li><li>Abordagem sobre o programa Estadual de Sanidade dos Animais Aquáticos;</li><li>Boas práticas manejo sanitário e medidas de biosseguridade em pisciculturas;</li><li>Cadastramento de pisciculturas (POP PESAA n° 01);</li><li>Vigilâncias em estabelecimentos aquícolas (POP PESAA n° 02);</li><li>Coleta de material, acondicionamento e envio de amostras pelo serviço veterinário oficial estadual;</li><li>Preenchimento de formulários de coleta de amostra e ou atendimentos oficiais;</li><li>Abordagem sobre o Epicolletct5 (vigilância PESAA);</li><li>Protocolos sanitários em estabelecimento quarentenário;</li><li>Principais enfermidades que acometem os peixes, identificação das doenças, diagnóstico clínico, prevenção;</li><li>Avaliações</li></ul></div><div><b>INSTRUTORES</b></div><div><ul><li>Thiago Fontolan Tardivo – Zootenista/Diretor de Desenvolvimento da AQUICULTURA - SEPEA/TO, Secretário executivo da Câmara Setorial da</li><li>Piscicultura-CSP/TO, e docente do na UniCatólica.</li><li>Marina Karina de Veiga Cabral Delphino – Médica Vet./ Gerente de Soluções de Saúde e Qualidade dos Peixes Grupo GenoMar Docente do Curso de</li><li>Medicina Veterinária do UniCatólica</li><li>Patrícia Oliveira Maciel - Médica Vet./ Pesquisadora na área temática de sanidade de organismos aquáticos da Embrapa Pesca e aquicultura Tocantins.</li><li>Andrey Chama da Costa - Eng. de Pesca/ Gerente de piscicultura do Ruraltins.</li><li>Elias Mendes – Médico Veterinário/Responsável Técnico do PESAA/TO.</li><li>César Romero - Médico Veterinário Responsável Técnico do Núcleo de Vigilância</li></ul></div>                    ', 0, '', 1, '2026-03-09 00:14:56', '2026-03-09 17:03:26', 2, NULL, 0, 0, 70.00, 3, NULL, NULL),
-(5, NULL, '2° TURMA CURSO CAPACITAÇÃO DE EVENTOS PECUÁRIOS', '2° TURMA CURSO CAPACITAÇÃO DE EVENTOS PECUÁRIOS', 'capa_1773084586_9f439565.jpeg', '', 'CURSO', 'EAD', 12.0, NULL, '2026-03-10', '2026-03-11', '', '', '', 'TO', '', 'https://www.youtube.com/watch?v=ZOXcPHh6ZqU&list=RDZOXcPHh6ZqU&start_radio=1', 'c4XeTP11EI8', 0.00, 'PUBLICADO', NULL, '<font size=\"3\"><b>Conteúdo Programático:&nbsp;</b></font><div><ul><li>Importância e o Papel do Médico Veterinário Privado/Autônomo na Defesa Sanitária Animal&nbsp;</li><li>Legislações do Programa de Eventos&nbsp;</li><li>Critérios para Cadastramento de Empresas Leiloeiras, Recintos e Eventos Agropecuários em Geral, no Estado do Tocantins&nbsp;</li><li>Habilitação no Mapa e Cadastro na ADAPEC para RT de Eventos Pecuários&nbsp;</li><li>Trânsito Animal para Eventos Agropecuários, Entrada e Saída&nbsp;</li><li>Responsabilidade Técnica e Ética&nbsp;</li><li>Bem Estar Animal&nbsp;</li><li>Avaliações&nbsp;</li></ul></div><div><b>INSTRUTORES</b></div><div><ul><li>Márcio de Oliveira Rezende/Diretor de Inspeção e Defesa Agropecuária ADAPEC-TO&nbsp;</li><li>Frederico Borba Diniz/Responsável Técnico do Programa de Eventos Pecuários ADAPEC-TO&nbsp;</li><li>Joyce Camilla P Santos/Responsável Técnica do Programa de Cadastros Agropecuários ADAPEC-TO&nbsp;</li><li>Filipe Carrilho/Médico Veterinário - CRMV\r\nRegina Barbosa/ Inspetora de Defesa Agropecuária ADAPEC-TO&nbsp;</li><li>Ana Lucia Rodrigues/Inspetora de Defesa Agropecuária ADAPEC-TO\r\n                                            </li></ul></div>', 12, '', 1, '2026-03-09 16:29:46', NULL, 2, NULL, 0, 0, 70.00, 3, NULL, NULL),
-(6, NULL, 'Treinamento de morcegos', '', NULL, '', 'CURSO', 'PRESENCIAL', 12.0, NULL, NULL, NULL, '', '', '', 'TO', '', '', '', 0.00, 'PUBLICADO', NULL, '<div><b>Conteúdo Programático:</b></div><div><ul><li>Panorama atual da piscicultura tocantinense (ascendência da atividade, municípios / região mais produtivos e identificação das espécies de importância</li><li>econômica no Tocantins);</li><li>Ascendência da atividade, municípios / região mais produtivos e identificação das espécies de importância econômica no Tocantins;</li><li>Câmara Setorial da Piscicultura;</li><li>Qualidade da água na piscicultura (Parâmetros Físico-químicos);</li><li>Abordagem sobre o programa Estadual de Sanidade dos Animais Aquáticos;</li><li>Boas práticas manejo sanitário e medidas de biosseguridade em pisciculturas;</li><li>Cadastramento de pisciculturas (POP PESAA n° 01);</li><li>Vigilâncias em estabelecimentos aquícolas (POP PESAA n° 02);</li><li>Coleta de material, acondicionamento e envio de amostras pelo serviço veterinário oficial estadual;</li><li>Preenchimento de formulários de coleta de amostra e ou atendimentos oficiais;</li><li>Abordagem sobre o Epicolletct5 (vigilância PESAA);</li><li>Protocolos sanitários em estabelecimento quarentenário;</li><li>Principais enfermidades que acometem os peixes, identificação das doenças, diagnóstico clínico, prevenção;</li><li>Avaliações</li></ul></div><div><b>INSTRUTORES</b></div><div><ul><li>Thiago Fontolan Tardivo – Zootenista/Diretor de Desenvolvimento da AQUICULTURA - SEPEA/TO, Secretário executivo da Câmara Setorial da</li><li>Piscicultura-CSP/TO, e docente do na UniCatólica.</li><li>Marina Karina de Veiga Cabral Delphino – Médica Vet./ Gerente de Soluções de Saúde e Qualidade dos Peixes Grupo GenoMar Docente do Curso de</li><li>Medicina Veterinária do UniCatólica</li><li>Patrícia Oliveira Maciel - Médica Vet./ Pesquisadora na área temática de sanidade de organismos aquáticos da Embrapa Pesca e aquicultura Tocantins.</li><li>Andrey Chama da Costa - Eng. de Pesca/ Gerente de piscicultura do Ruraltins.</li><li>Elias Mendes – Médico Veterinário/Responsável Técnico do PESAA/TO.</li><li>César Romero - Médico Veterinário Responsável Técnico do Núcleo de Vigilância</li></ul></div>\r\n            ', 0, '', 1, '2026-03-09 22:21:46', '2026-03-09 22:26:15', 2, NULL, 0, 0, 70.00, 3, NULL, NULL),
-(7, NULL, 'Treinamento teste do teste para teste', 'sadasdasdasdasda', 'capa_1773108104_303ab60e.jpeg', 'asdsadasd', 'CURSO', 'PRESENCIAL', 10.0, NULL, '2026-03-10', '2026-03-11', '', 'Auditório da adapec', 'Palmas', 'TO', 'Quadra ARSE 51 Alameda 9', '', '', 0.00, 'PUBLICADO', NULL, '', NULL, '', 1, '2026-03-09 23:01:44', '2026-03-09 23:04:00', 2, NULL, 1, 1, 70.00, 3, NULL, NULL),
-(8, NULL, 'Curso de Bombeiros', 'asdasdsadasdasdasdasd', 'capa_1773109651_bdee0497.jpeg', 'asdasdasd', 'CURSO', 'EAD', 10.0, NULL, '2026-03-10', '2026-03-17', '', '', '', 'TO', '', '', '', 0.00, 'PUBLICADO', NULL, '', NULL, '', 1, '2026-03-09 23:27:31', '2026-03-09 23:27:59', 2, NULL, 1, 1, 70.00, 3, NULL, NULL);
+(4, 7, 'Curso Febre Aftosa', 'sadasdsadsadsada', 'capa_1773026231_e46de8b9.jpeg', 'asdasdasdasdsad', 'CURSO', 'EAD', 12.0, 51, '2026-03-09', '2026-03-11', '', '', '', 'TO', '', '', 'c4XeTP11EI8', 0.00, 'PUBLICADO', NULL, '<div><b>Conteúdo Programático:</b></div><div><ul><li>Panorama atual da piscicultura tocantinense (ascendência da atividade, municípios / região mais produtivos e identificação das espécies de importância</li><li>econômica no Tocantins);</li><li>Ascendência da atividade, municípios / região mais produtivos e identificação das espécies de importância econômica no Tocantins;</li><li>Câmara Setorial da Piscicultura;</li><li>Qualidade da água na piscicultura (Parâmetros Físico-químicos);</li><li>Abordagem sobre o programa Estadual de Sanidade dos Animais Aquáticos;</li><li>Boas práticas manejo sanitário e medidas de biosseguridade em pisciculturas;</li><li>Cadastramento de pisciculturas (POP PESAA n° 01);</li><li>Vigilâncias em estabelecimentos aquícolas (POP PESAA n° 02);</li><li>Coleta de material, acondicionamento e envio de amostras pelo serviço veterinário oficial estadual;</li><li>Preenchimento de formulários de coleta de amostra e ou atendimentos oficiais;</li><li>Abordagem sobre o Epicolletct5 (vigilância PESAA);</li><li>Protocolos sanitários em estabelecimento quarentenário;</li><li>Principais enfermidades que acometem os peixes, identificação das doenças, diagnóstico clínico, prevenção;</li><li>Avaliações</li></ul></div><div><b>INSTRUTORES</b></div><div><ul><li>Thiago Fontolan Tardivo – Zootenista/Diretor de Desenvolvimento da AQUICULTURA - SEPEA/TO, Secretário executivo da Câmara Setorial da</li><li>Piscicultura-CSP/TO, e docente do na UniCatólica.</li><li>Marina Karina de Veiga Cabral Delphino – Médica Vet./ Gerente de Soluções de Saúde e Qualidade dos Peixes Grupo GenoMar Docente do Curso de</li><li>Medicina Veterinária do UniCatólica</li><li>Patrícia Oliveira Maciel - Médica Vet./ Pesquisadora na área temática de sanidade de organismos aquáticos da Embrapa Pesca e aquicultura Tocantins.</li><li>Andrey Chama da Costa - Eng. de Pesca/ Gerente de piscicultura do Ruraltins.</li><li>Elias Mendes – Médico Veterinário/Responsável Técnico do PESAA/TO.</li><li>César Romero - Médico Veterinário Responsável Técnico do Núcleo de Vigilância</li></ul></div>', 0, '', 1, '2026-03-09 00:14:56', '2026-03-09 00:17:11', 2, NULL, 0, 0, 70.00, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -414,57 +365,7 @@ INSERT INTO `tbl_log_atividades` (`log_id`, `usuario_id`, `acao`, `descricao`, `
 (50, 2, 'LOGIN', 'Login realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 00:28:24'),
 (51, 2, 'MATRICULAR', 'Matriculou Laura Regina da Silva Morais no curso #4 (status: ATIVA)', 'tbl_matriculas', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 00:29:42'),
 (52, 2, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 00:29:59'),
-(53, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 00:30:06'),
-(54, 2, 'LOGIN', 'Login realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 15:45:35'),
-(55, 2, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 15:58:49'),
-(56, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 15:58:57'),
-(57, 3, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:19:57'),
-(58, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:20:05'),
-(59, 3, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:26:11'),
-(60, 2, 'LOGIN', 'Login realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:26:16'),
-(61, 2, 'CRIAR_CURSO', 'Criou curso: 2° TURMA CURSO CAPACITAÇÃO DE EVENTOS PECUÁRIOS', 'tbl_cursos', 5, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:29:46'),
-(62, 2, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:31:40'),
-(63, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:31:56'),
-(64, 3, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:32:51'),
-(65, 2, 'LOGIN', 'Login realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:32:55'),
-(66, 2, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:33:58'),
-(67, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:34:07'),
-(68, 3, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:35:23'),
-(69, 2, 'LOGIN', 'Login realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:35:27'),
-(70, 2, 'EMITIR_CERT_LOTE', 'Emitidos 1 certificados para curso #4', 'tbl_cursos', 4, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:36:04'),
-(71, 2, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:36:08'),
-(72, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:36:15'),
-(73, 3, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:37:12'),
-(74, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:37:27'),
-(75, 3, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:38:21'),
-(76, 2, 'LOGIN', 'Login realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:38:26'),
-(77, 2, 'EDITAR_CURSO', 'Editou curso: Curso de Bovinos', 'tbl_cursos', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:44:32'),
-(78, 2, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:44:56'),
-(79, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 16:45:03'),
-(80, 3, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 17:03:13'),
-(81, 2, 'LOGIN', 'Login realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 17:03:19'),
-(82, 2, 'EDITAR_CURSO', 'Editou curso: Curso Febre Aftosa', 'tbl_cursos', 4, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 17:03:26'),
-(83, 2, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 17:03:31'),
-(84, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 17:03:37'),
-(85, 3, 'LOGOUT', 'Logout realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 22:03:46'),
-(86, 2, 'LOGIN', 'Login realizado', 'tbl_usuarios', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 22:03:55'),
-(87, 2, 'CRIAR_CURSO', 'Criou curso: Treinamento de morcegos', 'tbl_cursos', 6, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 22:21:46'),
-(88, 2, 'EDITAR_CURSO', 'Editou curso: Treinamento de morcegos', 'tbl_cursos', 6, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 22:26:15'),
-(89, 2, 'EDITAR_AULAS', 'Atualizou aulas do curso 6', 'tbl_cursos', 6, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 22:46:30'),
-(90, 2, 'CRIAR_CURSO', 'Criou curso: Treinamento teste do teste para teste', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:01:44'),
-(91, 2, 'EDITAR_AULAS', 'Atualizou aulas do curso 7', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:03:25'),
-(92, 2, 'EDITAR_CURSO', 'Editou curso: Treinamento teste do teste para teste', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:03:34'),
-(93, 2, 'EDITAR_AVALIACAO', 'Salvou avaliação curso 7', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:04:00'),
-(94, 2, 'EDITAR_CURSO', 'Editou curso: Treinamento teste do teste para teste', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:04:29'),
-(95, 2, 'EDITAR_AULAS', 'Atualizou aulas do curso 7', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:04:47'),
-(96, 2, 'EDITAR_AULAS', 'Atualizou aulas do curso 7', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:12:09'),
-(97, 2, 'EDITAR_AULAS', 'Atualizou aulas do curso 7', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:12:19'),
-(98, 2, 'EDITAR_CURSO', 'Editou curso: Treinamento teste do teste para teste', 'tbl_cursos', 7, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:12:30'),
-(99, 2, 'EDITAR_CURSO', 'Editou curso: Treinamento de morcegos', 'tbl_cursos', 6, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:25:09'),
-(100, 2, 'CRIAR_CURSO', 'Criou curso: Curso de Bombeiros', 'tbl_cursos', 8, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:27:31'),
-(101, 2, 'EDITAR_CURSO', 'Editou curso: Curso de Bombeiros', 'tbl_cursos', 8, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:27:51'),
-(102, 2, 'EDITAR_AVALIACAO', 'Salvou avaliação curso 8', 'tbl_cursos', 8, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:27:59'),
-(103, 2, 'EDITAR_CURSO', 'Editou curso: Curso de Bombeiros', 'tbl_cursos', 8, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 23:28:09');
+(53, 3, 'LOGIN', 'Login realizado', 'tbl_usuarios', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', '2026-03-09 00:30:06');
 
 -- --------------------------------------------------------
 
@@ -499,14 +400,7 @@ INSERT INTO `tbl_materiais` (`material_id`, `curso_id`, `modulo_id`, `nome_arqui
 (7, 4, NULL, 'mat_4_1773026231_4009c658.pdf', 'mat_2_1772852805_a6b2daf0.pdf', 540526, 'application/pdf', '2026-03-09 00:17:11', 2),
 (8, 4, NULL, 'mat_4_1773026231_49391c9c.pdf', 'Turma_02___Treinamento_em_Vigilância_e_Coleta_para_envio_de_Amostras_para_Diagnóstico_de_Doenças_em_Peixes_de_Cultivo-Certificado_Turma_02___Treinamento_em_Vigilância_e_Coleta_para_envio_de_Amostras_para_Diagn.pdf', 540526, 'application/pdf', '2026-03-09 00:17:11', 2),
 (9, 4, NULL, 'mat_4_1773026231_de974e1c.docx', 'proposta_estilizada_projeto_social.docx', 31524, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2026-03-09 00:17:11', 2),
-(10, 4, NULL, 'mat_4_1773026231_7924f433.docx', 'proposta_sistema_projeto_social.docx', 27336, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2026-03-09 00:17:11', 2),
-(11, 5, NULL, 'mat_5_1773084586_c73a585b.docx', 'mat_4_1773026231_7924f433.docx', 27336, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2026-03-09 16:29:46', 2),
-(12, 5, NULL, 'mat_5_1773084586_28531bae.docx', 'mat_4_1773026231_de974e1c.docx', 31524, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2026-03-09 16:29:46', 2),
-(13, 7, NULL, 'mat_7_1773108214_1588c4e2.docx', 'mat_4_1773026231_7924f433.docx', 27336, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2026-03-09 23:03:34', 2),
-(14, 7, NULL, 'mat_7_1773108214_04ca3551.docx', 'mat_4_1773026231_de974e1c.docx', 31524, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2026-03-09 23:03:34', 2),
-(15, 7, NULL, 'mat_7_1773108214_b5c96d32.pdf', 'mat_4_1773026231_49391c9c.pdf', 540526, 'application/pdf', '2026-03-09 23:03:34', 2),
-(16, 7, NULL, 'mat_7_1773108214_cca48dff.pdf', 'mat_4_1773026231_4009c658.pdf', 540526, 'application/pdf', '2026-03-09 23:03:34', 2),
-(17, 8, NULL, 'mat_8_1773109671_de66283b.docx', 'mat_4_1773026231_7924f433.docx', 27336, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2026-03-09 23:27:51', 2);
+(10, 4, NULL, 'mat_4_1773026231_7924f433.docx', 'proposta_sistema_projeto_social.docx', 27336, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2026-03-09 00:17:11', 2);
 
 -- --------------------------------------------------------
 
@@ -537,7 +431,7 @@ CREATE TABLE `tbl_matriculas` (
 INSERT INTO `tbl_matriculas` (`matricula_id`, `usuario_id`, `curso_id`, `status`, `nota_final`, `presenca_percent`, `certificado_gerado`, `certificado_codigo`, `certificado_emitido_em`, `progresso_ead`, `matriculado_em`, `atualizado_em`) VALUES
 (1, 3, 1, 'CONCLUIDA', NULL, NULL, 1, 'QA5P-E5TN-GSZY', '2026-03-06 23:01:57', 0, '2026-03-06 23:01:57', '2026-03-06 23:01:57'),
 (2, 3, 2, 'CONCLUIDA', NULL, NULL, 1, 'CWW6-JCD6-SNND', '2026-03-07 00:07:30', 0, '2026-03-07 00:07:30', '2026-03-07 00:07:30'),
-(3, 3, 4, 'ATIVA', NULL, NULL, 1, 'DPYU-W87C-J49J', '2026-03-09 16:36:04', 100, '2026-03-09 00:29:42', '2026-03-09 16:36:04');
+(3, 3, 4, 'ATIVA', NULL, NULL, 0, NULL, NULL, 0, '2026-03-09 00:29:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -554,15 +448,6 @@ CREATE TABLE `tbl_modulos` (
   `ordem` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
   `criado_em` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Despejando dados para a tabela `tbl_modulos`
---
-
-INSERT INTO `tbl_modulos` (`modulo_id`, `curso_id`, `titulo`, `descricao`, `ordem`, `criado_em`) VALUES
-(1, 6, 'Aulas do Curso', NULL, 1, '2026-03-09 22:46:30'),
-(2, 7, 'Aulas do Curso', NULL, 1, '2026-03-09 23:03:25'),
-(3, 8, 'Aulas do Curso', NULL, 1, '2026-03-09 23:27:44');
 
 -- --------------------------------------------------------
 
@@ -590,44 +475,6 @@ INSERT INTO `tbl_perfis` (`perfil_id`, `perfil_nome`, `perfil_descricao`, `ativo
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbl_progresso_aulas`
---
-
-DROP TABLE IF EXISTS `tbl_progresso_aulas`;
-CREATE TABLE `tbl_progresso_aulas` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `matricula_id` int(10) UNSIGNED NOT NULL,
-  `aula_id` int(10) UNSIGNED NOT NULL,
-  `assistido_em` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Registra quais aulas cada aluno assistiu/acessou';
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `tbl_progresso_materiais`
---
-
-DROP TABLE IF EXISTS `tbl_progresso_materiais`;
-CREATE TABLE `tbl_progresso_materiais` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `matricula_id` int(10) UNSIGNED NOT NULL,
-  `material_id` int(10) UNSIGNED NOT NULL,
-  `baixado_em` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Registra quais materiais cada aluno baixou';
-
---
--- Despejando dados para a tabela `tbl_progresso_materiais`
---
-
-INSERT INTO `tbl_progresso_materiais` (`id`, `matricula_id`, `material_id`, `baixado_em`) VALUES
-(1, 3, 7, '2026-03-09 15:59:35'),
-(2, 3, 8, '2026-03-09 15:59:39'),
-(3, 3, 9, '2026-03-09 15:59:42'),
-(4, 3, 10, '2026-03-09 15:59:46');
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `tbl_questoes`
 --
 
@@ -641,48 +488,6 @@ CREATE TABLE `tbl_questoes` (
   `ordem` smallint(6) NOT NULL DEFAULT 0,
   `ativo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `tbl_questoes`
---
-
-INSERT INTO `tbl_questoes` (`questao_id`, `avaliacao_id`, `enunciado`, `tipo`, `pontos`, `ordem`, `ativo`) VALUES
-(1, 1, 'Como você avalia a organização geral do curso?', 'MULTIPLA', 1.00, 1, 1),
-(2, 1, 'Como você avalia a organização geral do curso?', 'MULTIPLA', 1.00, 2, 1),
-(3, 1, 'Como você avalia a organização geral do curso?', 'MULTIPLA', 1.00, 3, 1),
-(4, 2, 'asdasdasdasdas', 'MULTIPLA', 1.00, 1, 1);
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `tbl_respostas_avaliacao`
---
-
-DROP TABLE IF EXISTS `tbl_respostas_avaliacao`;
-CREATE TABLE `tbl_respostas_avaliacao` (
-  `resposta_id` int(10) UNSIGNED NOT NULL,
-  `tentativa_id` int(10) UNSIGNED NOT NULL,
-  `questao_id` int(10) UNSIGNED NOT NULL,
-  `alternativa_id` int(10) UNSIGNED DEFAULT NULL,
-  `correta` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Resposta escolhida por questão em cada tentativa';
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `tbl_tentativas_avaliacao`
---
-
-DROP TABLE IF EXISTS `tbl_tentativas_avaliacao`;
-CREATE TABLE `tbl_tentativas_avaliacao` (
-  `tentativa_id` int(10) UNSIGNED NOT NULL,
-  `matricula_id` int(10) UNSIGNED NOT NULL,
-  `avaliacao_id` int(10) UNSIGNED NOT NULL,
-  `nota` decimal(5,2) DEFAULT NULL,
-  `aprovado` tinyint(1) NOT NULL DEFAULT 0,
-  `iniciado_em` datetime NOT NULL DEFAULT current_timestamp(),
-  `concluido_em` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Uma linha por tentativa de avaliação do aluno';
 
 -- --------------------------------------------------------
 
@@ -733,8 +538,8 @@ CREATE TABLE `tbl_usuarios` (
 
 INSERT INTO `tbl_usuarios` (`usuario_id`, `perfil_id`, `nome_completo`, `cpf`, `rg`, `data_nascimento`, `sexo`, `email`, `telefone`, `celular`, `crmv_numero`, `crmv_uf`, `especialidade`, `instituicao`, `cep`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `uf`, `senha_hash`, `senha_salt`, `token_reset`, `token_expira`, `ultimo_acesso`, `tentativas_login`, `bloqueado_ate`, `ativo`, `foto_perfil`, `criado_em`, `atualizado_em`, `criado_por`) VALUES
 (1, 1, 'Administrador CRMV/TO', '000.000.000-00', NULL, NULL, NULL, 'admin@crmvto.gov.br', NULL, NULL, NULL, 'TO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$12$iFfCICMMbcmQaVbxV0aZ..U.nSNb0X6Ybu2Ge8.MgEInJ6Y4idaAG', '1c003c3db25d4845573f3552ed9b7229', NULL, NULL, '2026-03-07 00:08:41', 0, NULL, 1, NULL, '2026-03-06 17:19:47', '2026-03-07 00:08:41', NULL),
-(2, 1, 'Ian Leandro Cardoso Formiga', '04426330731', '1140811', '1997-12-06', 'M', 'formigaian@gmail.com', '63992863557', '63992863557', '123456852', 'TO', 'Pets', 'Sant Cane', '77021668', 'Quadra ARSE 51 Alameda 9', '9', 'Casa', 'Plano Diretor Sul', 'Palmas', 'TO', '$2y$12$aDB2vaPhI5i9FeS7TbZPueTIjJbAW29oCIRWs3iWOkw.gFBZTRKWS', 'f4194a06cf6d890409e15afe9d20e8fd', NULL, NULL, '2026-03-09 22:03:55', 0, NULL, 1, NULL, '2026-03-06 22:02:32', '2026-03-09 22:03:55', 1),
-(3, 2, 'Laura Regina da Silva Morais', '95814844000', '1140811', '2000-12-06', 'F', 'lrmorais29@gmail.com', '63992863557', '63992863557', '123546', 'TO', 'Pets', 'Sant Cane', '77021668', 'Quadra ARSE 51 Alameda 9', '9', NULL, 'Plano Diretor Sul', 'Palmas', 'TO', '$2y$12$oHa3CxhwokYKnJS.ucNVMusohr0JtGetyk31pJEnYFuLGy4V32bzG', 'd866be9306040c764ccca87bb54a50e8', NULL, NULL, '2026-03-09 17:03:37', 0, NULL, 1, NULL, '2026-03-06 22:45:13', '2026-03-09 17:03:37', 2);
+(2, 1, 'Ian Leandro Cardoso Formiga', '04426330731', '1140811', '1997-12-06', 'M', 'formigaian@gmail.com', '63992863557', '63992863557', '123456852', 'TO', 'Pets', 'Sant Cane', '77021668', 'Quadra ARSE 51 Alameda 9', '9', 'Casa', 'Plano Diretor Sul', 'Palmas', 'TO', '$2y$12$aDB2vaPhI5i9FeS7TbZPueTIjJbAW29oCIRWs3iWOkw.gFBZTRKWS', 'f4194a06cf6d890409e15afe9d20e8fd', NULL, NULL, '2026-03-09 00:28:24', 0, NULL, 1, NULL, '2026-03-06 22:02:32', '2026-03-09 00:28:24', 1),
+(3, 2, 'Laura Regina da Silva Morais', '95814844000', '1140811', '2000-12-06', 'F', 'lrmorais29@gmail.com', '63992863557', '63992863557', '123546', 'TO', 'Pets', 'Sant Cane', '77021668', 'Quadra ARSE 51 Alameda 9', '9', NULL, 'Plano Diretor Sul', 'Palmas', 'TO', '$2y$12$oHa3CxhwokYKnJS.ucNVMusohr0JtGetyk31pJEnYFuLGy4V32bzG', 'd866be9306040c764ccca87bb54a50e8', NULL, NULL, '2026-03-09 00:30:06', 0, NULL, 1, NULL, '2026-03-06 22:45:13', '2026-03-09 00:30:06', 2);
 
 -- --------------------------------------------------------
 
@@ -761,7 +566,7 @@ CREATE TABLE `vw_dashboard_totais` (
 DROP TABLE IF EXISTS `vw_dashboard_totais`;
 
 DROP VIEW IF EXISTS `vw_dashboard_totais`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_dashboard_totais`  AS SELECT (select count(0) from `tbl_usuarios` where `tbl_usuarios`.`ativo` = 1 and `tbl_usuarios`.`perfil_id` = 2) AS `total_veterinarios`, (select count(0) from `tbl_cursos` where `tbl_cursos`.`ativo` = 1) AS `total_cursos`, (select count(0) from `tbl_cursos` where `tbl_cursos`.`status` = 'PUBLICADO' and `tbl_cursos`.`ativo` = 1) AS `cursos_publicados`, (select count(0) from `tbl_matriculas`) AS `total_matriculas`, (select count(0) from `tbl_matriculas` where `tbl_matriculas`.`certificado_gerado` = 1) AS `total_certificados`, (select count(0) from `tbl_usuarios` where `tbl_usuarios`.`ativo` = 1 and `tbl_usuarios`.`perfil_id` = 2 and month(`tbl_usuarios`.`criado_em`) = month(current_timestamp()) and year(`tbl_usuarios`.`criado_em`) = year(current_timestamp())) AS `novos_este_mes`, (select count(0) from `tbl_cursos` where `tbl_cursos`.`ativo` = 1 and month(`tbl_cursos`.`criado_em`) = month(current_timestamp()) and year(`tbl_cursos`.`criado_em`) = year(current_timestamp())) AS `cursos_este_mes` ;
+CREATE OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_dashboard_totais`  AS SELECT (select count(0) from `tbl_usuarios` where `tbl_usuarios`.`ativo` = 1 and `tbl_usuarios`.`perfil_id` = 2) AS `total_veterinarios`, (select count(0) from `tbl_cursos` where `tbl_cursos`.`ativo` = 1) AS `total_cursos`, (select count(0) from `tbl_cursos` where `tbl_cursos`.`status` = 'PUBLICADO' and `tbl_cursos`.`ativo` = 1) AS `cursos_publicados`, (select count(0) from `tbl_matriculas`) AS `total_matriculas`, (select count(0) from `tbl_matriculas` where `tbl_matriculas`.`certificado_gerado` = 1) AS `total_certificados`, (select count(0) from `tbl_usuarios` where `tbl_usuarios`.`ativo` = 1 and `tbl_usuarios`.`perfil_id` = 2 and month(`tbl_usuarios`.`criado_em`) = month(current_timestamp()) and year(`tbl_usuarios`.`criado_em`) = year(current_timestamp())) AS `novos_este_mes`, (select count(0) from `tbl_cursos` where `tbl_cursos`.`ativo` = 1 and month(`tbl_cursos`.`criado_em`) = month(current_timestamp()) and year(`tbl_cursos`.`criado_em`) = year(current_timestamp())) AS `cursos_este_mes` ;
 
 --
 -- Índices para tabelas despejadas
@@ -876,40 +681,11 @@ ALTER TABLE `tbl_perfis`
   ADD PRIMARY KEY (`perfil_id`);
 
 --
--- Índices de tabela `tbl_progresso_aulas`
---
-ALTER TABLE `tbl_progresso_aulas`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uq_mat_aula` (`matricula_id`,`aula_id`);
-
---
--- Índices de tabela `tbl_progresso_materiais`
---
-ALTER TABLE `tbl_progresso_materiais`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uq_mat_material` (`matricula_id`,`material_id`);
-
---
 -- Índices de tabela `tbl_questoes`
 --
 ALTER TABLE `tbl_questoes`
   ADD PRIMARY KEY (`questao_id`),
   ADD KEY `avaliacao_id` (`avaliacao_id`);
-
---
--- Índices de tabela `tbl_respostas_avaliacao`
---
-ALTER TABLE `tbl_respostas_avaliacao`
-  ADD PRIMARY KEY (`resposta_id`),
-  ADD UNIQUE KEY `uq_tent_questao` (`tentativa_id`,`questao_id`);
-
---
--- Índices de tabela `tbl_tentativas_avaliacao`
---
-ALTER TABLE `tbl_tentativas_avaliacao`
-  ADD PRIMARY KEY (`tentativa_id`),
-  ADD KEY `fk_tent_matricula` (`matricula_id`),
-  ADD KEY `fk_tent_avaliacao` (`avaliacao_id`);
 
 --
 -- Índices de tabela `tbl_usuarios`
@@ -927,19 +703,19 @@ ALTER TABLE `tbl_usuarios`
 -- AUTO_INCREMENT de tabela `tbl_alternativas`
 --
 ALTER TABLE `tbl_alternativas`
-  MODIFY `alternativa_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `alternativa_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_aulas`
 --
 ALTER TABLE `tbl_aulas`
-  MODIFY `aula_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `aula_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_avaliacoes`
 --
 ALTER TABLE `tbl_avaliacoes`
-  MODIFY `avaliacao_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `avaliacao_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_categorias`
@@ -951,7 +727,7 @@ ALTER TABLE `tbl_categorias`
 -- AUTO_INCREMENT de tabela `tbl_certificados`
 --
 ALTER TABLE `tbl_certificados`
-  MODIFY `cert_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cert_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_configuracoes`
@@ -963,7 +739,7 @@ ALTER TABLE `tbl_configuracoes`
 -- AUTO_INCREMENT de tabela `tbl_cursos`
 --
 ALTER TABLE `tbl_cursos`
-  MODIFY `curso_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `curso_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_curso_instrutores`
@@ -987,13 +763,13 @@ ALTER TABLE `tbl_instrutores`
 -- AUTO_INCREMENT de tabela `tbl_log_atividades`
 --
 ALTER TABLE `tbl_log_atividades`
-  MODIFY `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_materiais`
 --
 ALTER TABLE `tbl_materiais`
-  MODIFY `material_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `material_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_matriculas`
@@ -1005,7 +781,7 @@ ALTER TABLE `tbl_matriculas`
 -- AUTO_INCREMENT de tabela `tbl_modulos`
 --
 ALTER TABLE `tbl_modulos`
-  MODIFY `modulo_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `modulo_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_perfis`
@@ -1014,34 +790,10 @@ ALTER TABLE `tbl_perfis`
   MODIFY `perfil_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de tabela `tbl_progresso_aulas`
---
-ALTER TABLE `tbl_progresso_aulas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `tbl_progresso_materiais`
---
-ALTER TABLE `tbl_progresso_materiais`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT de tabela `tbl_questoes`
 --
 ALTER TABLE `tbl_questoes`
-  MODIFY `questao_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de tabela `tbl_respostas_avaliacao`
---
-ALTER TABLE `tbl_respostas_avaliacao`
-  MODIFY `resposta_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `tbl_tentativas_avaliacao`
---
-ALTER TABLE `tbl_tentativas_avaliacao`
-  MODIFY `tentativa_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `questao_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_usuarios`

@@ -9,7 +9,7 @@ exigeLogin();
 if ((int)($_SESSION['usr_perfil'] ?? 0) === 1) {
     header('Location: /crmv/admin/dashboard.php'); exit;
 }
-$_nomeExib  = primeiraLetra($_SESSION['usr_nome'] ?? 'Veterinário');
+$_nomeExib  = (explode(' ', $_SESSION['usr_nome'] ?? 'Veterinário')[0]) ?: 'Veterinário';
 $_iniciais  = strtoupper(mb_substr($_SESSION['usr_nome'] ?? 'V', 0, 1));
 $_flash     = getFlash();
 ?>

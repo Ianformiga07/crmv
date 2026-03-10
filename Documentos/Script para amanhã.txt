@@ -1,0 +1,7 @@
+TUdo bem claude deu tudo certo e está funcionando perfeitamente por enquanto.
+
+Mas precisamos de mais algumas alterações na parte do admin, quero que voce tire a obrigatoriedade do administrador gerar o certificado do aluno, pois quando ele concluir tudo certinho o proprio certificado fique liberado pra ele.
+
+Em segundo preciso que adicione a opção de inserir mais de um link de aula no cadastro do curso, para que eu possa inseriri varios links e tambem possa inseiri pór upload caso o curso seja gravado localmente, irei mandar o que tenho para que voce possa fazer as alterações:
+
+Ah e nessa mesma parte coloque a opção do admin criar uma avalialção para ir para o curso quando o aluno finalizar as aulas e os materiais.
